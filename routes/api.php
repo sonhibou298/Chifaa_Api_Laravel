@@ -36,3 +36,7 @@ Route::delete('users/{id}', [UserController::class, 'destroy'])->name('deleteUse
 Route::put('user/{id}', [UserController::class, 'update'])->name('updateUser');
 Route::get('user/{id}', [UserController::class, 'show'])->name('showUser');
 
+/*--------------------------------------------------------------------------------------
+                                    Route User
+---------------------------------------------------------------------------------------*/
+
