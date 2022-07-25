@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('medecins', function (Blueprint $table) {
             $table->id();
+            $table->boolean('disponible');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('jour_de_service_id')->constrained()->onDelete('cascade');
             $table->timestamps();

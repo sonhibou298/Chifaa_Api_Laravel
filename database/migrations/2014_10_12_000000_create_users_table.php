@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('telephone', 13)->unique();
             $table->date('dateNaissance');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('status');
             $table->string('profil')->default('default.png');

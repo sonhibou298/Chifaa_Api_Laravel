@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\MedecinController;
+use App\Http\Controllers\PatientController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,9 +19,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
 /*--------------------------------------------------------------------------------------
                                     Route Role
 ---------------------------------------------------------------------------------------*/
@@ -30,13 +31,28 @@ Route::put('role/{id}', [RoleController::class, 'update'])->name('updateRole');
 /*--------------------------------------------------------------------------------------
                                     Route User
 ---------------------------------------------------------------------------------------*/
-Route::get('users', [UserController::class, 'index'])->name('listUsers');
+Route::post('login', [UserController::class, 'login'])->name('login');
 Route::post('user', [UserController::class, 'store'])->name('addUser');
 Route::delete('users/{id}', [UserController::class, 'destroy'])->name('deleteUser');
 Route::put('user/{id}', [UserController::class, 'update'])->name('updateUser');
 Route::get('user/{id}', [UserController::class, 'show'])->name('showUser');
 
-/*--------------------------------------------------------------------------------------
-                                    Route User
----------------------------------------------------------------------------------------*/
+Route::group(['middleware' => ['auth:sanctum']], function (){
+    Route::get('users/search/{prenom}', [UserController::class, 'search'])->name('search');
+    Route::get('users', [UserController::class, 'index'])->name('listUsers');
+});
 
+/*--------------------------------------------------------------------------------------
+                                    Route Medecin
+---------------------------------------------------------------------------------------*/
+Route::get('medecins', [MedecinController::class, 'index'])->name('listMedecins');
+Route::put('medecin/{id}', [UserController::class, 'update'])->name('updateProfilMedecin');
+Route::put('medecin/{id}', [MedecinController::class, 'update'])->name('updateServiceMedecin');
+Route::delete('medecin/{id}', [MedecinController::class, 'destroy'])->name('deleteMedecin');
+Route::get('medecin/{id}', [MedecinController::class, 'show'])->name('infoMedecin');
+Route::post('medecin', [MedecinController::class, 'store'])->name('addMedecin');
+
+/*--------------------------------------------------------------------------------------
+                                    Route Patient
+---------------------------------------------------------------------------------------*/
+Route::get('patients', [PatientController::class, 'index'])->name('listPatients');

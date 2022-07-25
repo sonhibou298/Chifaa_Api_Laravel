@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Medecin;
 use App\Http\Requests\StoreMedecinRequest;
 use App\Http\Requests\UpdateMedecinRequest;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class MedecinController extends Controller
 {
@@ -15,7 +17,8 @@ class MedecinController extends Controller
      */
     public function index()
     {
-        //
+        $result =DB::select("SELECT nom, prenom, genre, dateNaissance, status FROM users WHERE role_id = 2");
+        return response()->json($result);
     }
 
     /**
@@ -36,7 +39,15 @@ class MedecinController extends Controller
      */
     public function store(StoreMedecinRequest $request)
     {
-        //
+        $fiels = $request->validate([
+            'disponible' => 'required|boolean',
+            'user_id' => 'required|int',
+            'jour_de_service_id' => 'required|int'
+        ]);
+
+        $medecin = Medecin::create([
+
+        ]);
     }
 
     /**
@@ -45,21 +56,13 @@ class MedecinController extends Controller
      * @param  \App\Models\Medecin  $medecin
      * @return \Illuminate\Http\Response
      */
-    public function show(Medecin $medecin)
+    public function show(Medecin $medecin, $id)
     {
-        //
+        $medecin = Medecin::find($id);
+        return $medecin;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Medecin  $medecin
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Medecin $medecin)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
@@ -68,9 +71,13 @@ class MedecinController extends Controller
      * @param  \App\Models\Medecin  $medecin
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateMedecinRequest $request, Medecin $medecin)
+    public function update(UpdateMedecinRequest $request, Medecin $medecin, $id)
     {
-        //
+        $medecin = Medecin::find($id);
+        $medecin->update($request->all());
+        return response()->json([
+            'Message'=>'Medecein modifié'
+        ]);
     }
 
     /**
@@ -79,8 +86,12 @@ class MedecinController extends Controller
      * @param  \App\Models\Medecin  $medecin
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Medecin $medecin)
+    public function destroy(Medecin $medecin, $id)
     {
-        //
+        $medecin = Medecin::find($id);
+        $medecin->delete();
+        return response()->json([
+            'Message'=>'Medecein supprimé'
+        ]);
     }
 }

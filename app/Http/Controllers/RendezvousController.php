@@ -15,18 +15,11 @@ class RendezvousController extends Controller
      */
     public function index()
     {
-        //
+        $rv = Rendezvous::all();
+        return response()->json($rv);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -36,7 +29,8 @@ class RendezvousController extends Controller
      */
     public function store(StoreRendezvousRequest $request)
     {
-        //
+        $rv = Rendezvous::create($request->all());
+        return response()->json($rv);
     }
 
     /**
@@ -45,21 +39,13 @@ class RendezvousController extends Controller
      * @param  \App\Models\Rendezvous  $rendezvous
      * @return \Illuminate\Http\Response
      */
-    public function show(Rendezvous $rendezvous)
+    public function show(Rendezvous $rendezvous, $id)
     {
-        //
+        $rv = Rendezvous::find($id);
+        return $rv;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Rendezvous  $rendezvous
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Rendezvous $rendezvous)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
@@ -68,9 +54,13 @@ class RendezvousController extends Controller
      * @param  \App\Models\Rendezvous  $rendezvous
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRendezvousRequest $request, Rendezvous $rendezvous)
+    public function update(UpdateRendezvousRequest $request, Rendezvous $rendezvous, $id)
     {
-        //
+        $rv = Rendezvous::find($id);
+        $rv->update($request->all());
+        return response()->json([
+            'message' => 'Rendez-vous modifié'
+        ]);
     }
 
     /**
@@ -79,8 +69,12 @@ class RendezvousController extends Controller
      * @param  \App\Models\Rendezvous  $rendezvous
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Rendezvous $rendezvous)
+    public function destroy(Rendezvous $rendezvous, $id)
     {
-        //
+        $rv = Rendezvous::find($id);
+        $rv->delete();
+        return response()->json([
+            'message' => 'Rendez-vous modifié'
+        ]);
     }
 }

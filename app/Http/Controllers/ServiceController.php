@@ -15,18 +15,10 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        //
+        $service = Service::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -36,7 +28,8 @@ class ServiceController extends Controller
      */
     public function store(StoreServiceRequest $request)
     {
-        //
+        $service = Service::create($request->all());
+        return $service;
     }
 
     /**
@@ -45,21 +38,13 @@ class ServiceController extends Controller
      * @param  \App\Models\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function show(Service $service)
+    public function show(Service $service, $id)
     {
-        //
+        $service = Service::find($id);
+        return $service;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Service  $service
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Service $service)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
@@ -68,9 +53,13 @@ class ServiceController extends Controller
      * @param  \App\Models\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateServiceRequest $request, Service $service)
+    public function update(UpdateServiceRequest $request, Service $service, $id)
     {
-        //
+        $service = Service::find($id);
+        $service->update($request->all());
+        return response()->json([
+            'Message' => 'Service Modifié'
+        ]);
     }
 
     /**
@@ -79,8 +68,12 @@ class ServiceController extends Controller
      * @param  \App\Models\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Service $service)
+    public function destroy(Service $service, $id)
     {
-        //
+        $service = Service::find($id);
+        $service->delete();
+        return response()->json([
+            'Message' => 'Service Supprimer'
+        ]);
     }
 }

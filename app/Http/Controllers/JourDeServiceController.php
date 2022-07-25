@@ -15,18 +15,10 @@ class JourDeServiceController extends Controller
      */
     public function index()
     {
-        //
+        $jourService = JourDeService::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -36,7 +28,8 @@ class JourDeServiceController extends Controller
      */
     public function store(StoreJourDeServiceRequest $request)
     {
-        //
+        $jourService = JourDeService::create($request->all());
+
     }
 
     /**
@@ -45,21 +38,13 @@ class JourDeServiceController extends Controller
      * @param  \App\Models\JourDeService  $jourDeService
      * @return \Illuminate\Http\Response
      */
-    public function show(JourDeService $jourDeService)
+    public function show(JourDeService $jourDeService, $id)
     {
-        //
+        $jourDeService = JourDeService::find($id);
+        return $jourDeService;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\JourDeService  $jourDeService
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(JourDeService $jourDeService)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
@@ -68,9 +53,13 @@ class JourDeServiceController extends Controller
      * @param  \App\Models\JourDeService  $jourDeService
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateJourDeServiceRequest $request, JourDeService $jourDeService)
+    public function update(UpdateJourDeServiceRequest $request, JourDeService $jourDeService, $id)
     {
-        //
+        $jourDeService = JourDeService::find($id);
+        $jourDeService->update($request->all());
+        return response()->json([
+            'Message' => 'Jour de service modifié'
+        ]);
     }
 
     /**
@@ -79,8 +68,12 @@ class JourDeServiceController extends Controller
      * @param  \App\Models\JourDeService  $jourDeService
      * @return \Illuminate\Http\Response
      */
-    public function destroy(JourDeService $jourDeService)
+    public function destroy(JourDeService $jourDeService, $id)
     {
-        //
+        $jourDeService = JourDeService::find($id);
+        $jourDeService->delete();
+        return response()->json([
+            'Message' => 'Jour de service supprimé'
+        ]);
     }
 }
