@@ -9,6 +9,19 @@ class Rendezvous extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'dateReservation',
+        'dateRendezVous',
+        'heureRendezVous',
+        'motifConsultation',
+        'etat',
+        'paye',
+        'tarif_id',
+        'medecin_id',
+        'patient_id',
+        'proche_id'
+    ];
+
     public function tarif()
     {
         return $this->belongsTo(Tarif::class);

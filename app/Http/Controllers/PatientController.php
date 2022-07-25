@@ -30,7 +30,7 @@ class PatientController extends Controller
      */
     public function store(StorePatientRequest $request)
     {
-        //
+        
     }
 
     /**

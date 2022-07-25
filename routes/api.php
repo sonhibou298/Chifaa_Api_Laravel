@@ -36,6 +36,8 @@ Route::put('role/{id}', [RoleController::class, 'update'])->name('updateRole');
                                     Route User
 ---------------------------------------------------------------------------------------*/
 Route::post('login', [UserController::class, 'login'])->name('login');
+Route::get('users', [UserController::class, 'index'])->name('listUsers');
+
 Route::post('user', [UserController::class, 'store'])->name('addUser');
 Route::delete('users/{id}', [UserController::class, 'destroy'])->name('deleteUser');
 Route::put('user/{id}', [UserController::class, 'update'])->name('updateUser');
@@ -43,7 +45,6 @@ Route::get('user/{id}', [UserController::class, 'show'])->name('showUser');
 
 Route::group(['middleware' => ['auth:sanctum']], function (){
     Route::get('users/search/{prenom}', [UserController::class, 'search'])->name('search');
-    Route::get('users', [UserController::class, 'index'])->name('listUsers');
 });
 
 /*--------------------------------------------------------------------------------------

@@ -29,7 +29,12 @@ class TarifController extends Controller
      */
     public function store(StoreTarifRequest $request)
     {
-        $tarif = Tarif::create($request->all());
+        $fields = $request->validate([
+            'coutConsultation' => 'required|int'
+        ]);
+        $tarif = Tarif::create([
+            'coutConsultation' => $fields['coutConsultation']
+        ]);
         return response()->json([
             'Success' => 'Tarif inséré avec Succès'
         ]);

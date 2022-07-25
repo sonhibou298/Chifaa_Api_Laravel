@@ -28,7 +28,14 @@ class ServiceController extends Controller
      */
     public function store(StoreServiceRequest $request)
     {
-        $service = Service::create($request->all());
+        $fields = $request->validate([
+            'nomService' => 'required|string',
+            'tarif_id' => 'required|int'
+        ]);
+        $service = Service::create([
+            'nomService' => $fields['nomService'],
+            'tarif_id' => $fields['tarif_id'],
+        ]);
         return $service;
     }
 

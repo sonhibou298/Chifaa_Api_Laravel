@@ -29,7 +29,29 @@ class RendezvousController extends Controller
      */
     public function store(StoreRendezvousRequest $request)
     {
-        $rv = Rendezvous::create($request->all());
+        $fields = $request->validate([
+            'dateReservation' => 'required|date',
+            'dateRendezVous' => 'required|date',
+            'heureRendezVous' => 'required',
+            'motifConsultation' => 'required|string',
+            'tarif_id' => 'required|int',
+            'medecin_id' => 'required|int',
+            'patient_id' => 'required|int',
+
+        ]);
+        $rv = Rendezvous::create([
+            'dateReservation' => $fields['dateReservation'],
+            'dateRendezVous' => $fields['dateRendezVous'],
+            'heureRendezVous' => $fields['heureRendezVous'],
+            'motifConsultation' => $fields['motifConsultation'],
+            'etat' => $request->input('etat'),
+            'paye' => $request->input('paye'),
+            'tarif_id' => $fields['tarif_id'],
+            'medecin_id' => $fields['medecin_id'],
+            'patient_id' => $fields['patient_id'],
+            'proche_id' => $request->input('proche_id'),
+
+        ]);
         return response()->json($rv);
     }
 

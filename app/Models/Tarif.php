@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Tarif extends Model
 {
     use HasFactory;
+    protected $fillable = ['coutConsultation'];
 
     public function services()
     {
